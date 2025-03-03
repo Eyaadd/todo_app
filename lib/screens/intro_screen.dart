@@ -30,7 +30,7 @@ class IntroductionScreen extends StatelessWidget {
               fit: BoxFit.cover,
             ),
             SizedBox(
-              height: 28,
+              height: 1,
             ),
             Text(
               context.tr("introduction_title"),
@@ -40,12 +40,12 @@ class IntroductionScreen extends StatelessWidget {
                   .copyWith(color: Theme.of(context).primaryColor),
             ),
             SizedBox(
-              height: 28,
+              height: 8,
             ),
             Text("introduction_desc".tr(),
                 style: Theme.of(context).textTheme.titleSmall),
             SizedBox(
-              height: 28,
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,7 +129,7 @@ class IntroductionScreen extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 28,
+              height: 20,
             ),
             ElevatedButton(
               onPressed: () {

@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/firebase/firebase_manager.dart';
 import 'package:todo_app/provider/my_provider.dart';
+import 'package:todo_app/screens/home/create_event.dart';
 import 'package:todo_app/screens/home_screen.dart';
 import 'package:todo_app/screens/intro_screen.dart';
 import 'package:todo_app/screens/login_screen.dart';
@@ -10,9 +13,15 @@ import 'package:todo_app/theme/dark_theme.dart';
 import 'package:todo_app/theme/light_theme.dart';
 import 'package:todo_app/theme/theme.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseManager.addEvent();
   runApp(
     ChangeNotifierProvider(
       create: (context) => MyProvider(),
@@ -48,6 +57,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (context) => LoginScreen(),
         RegisterScreen.routeName: (context) => RegisterScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
+        CreateEvent.routeName: (context) => CreateEvent(),
       },
     );
   }
