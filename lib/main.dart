@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/firebase/firebase_manager.dart';
+import 'package:todo_app/provider/create_event_provider.dart';
 import 'package:todo_app/provider/my_provider.dart';
 import 'package:todo_app/screens/home/create_event.dart';
 import 'package:todo_app/screens/home_screen.dart';
@@ -21,10 +22,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseManager.addEvent();
   runApp(
     ChangeNotifierProvider(
-      create: (context) => MyProvider(),
+      create: (context) => CreateEventProvider(),
       child: EasyLocalization(
         supportedLocales: [Locale('en'), Locale('ar')],
         path: 'assets/translations',
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<MyProvider>(context);
+    var provider = Provider.of<CreateEventProvider>(context);
     BasicTheme lightTheme = LightTheme();
     BasicTheme darkTheme = DarkTheme();
     return MaterialApp(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/provider/create_event_provider.dart';
 import 'package:todo_app/widgets/category_event_item.dart';
+
+import '../../firebase/firebase_manager.dart';
 
 class CreateEvent extends StatelessWidget {
   static const String routeName = "CreateEventScreen";
@@ -13,11 +16,8 @@ class CreateEvent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CreateEventProvider(),
-      builder: (context, child) {
-        var provider = Provider.of<CreateEventProvider>(context);
-        return Scaffold(
+    var provider = Provider.of<CreateEventProvider>(context, listen: false);
+    return Scaffold(
           appBar: AppBar(
             iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
             title: Text(
@@ -95,7 +95,7 @@ class CreateEvent extends StatelessWidget {
                   ),
                   TextField(
                       controller: descriptionController,
-                      maxLines: 5,
+                      maxLines: 3,
                       decoration: InputDecoration(
                         labelText: "Title",
                         labelStyle: Theme.of(context)
@@ -189,11 +189,12 @@ class CreateEvent extends StatelessWidget {
                         onTap: () async {
                           var time = await showTimePicker(
                               context: context, initialTime: TimeOfDay.now());
-                          if (time != null){
+                          if (time != null) {
                             provider.changeTime(time);
                           }
                         },
-                        child: Text(provider.selectedTime.toString().substring(10,15),
+                        child: Text(
+                            provider.selectedTime.toString().substring(10, 15),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
@@ -202,12 +203,68 @@ class CreateEvent extends StatelessWidget {
                       )
                     ],
                   ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                                child: CircularProgressIndicator(
+                              color: Theme.of(context).primaryColor,
+                            ));
+                          },
+                        );
+                        TaskModel model = TaskModel(
+                            title: titleController.text,
+                            category: provider.selectedCategoryName,
+                            description: descriptionController.text,
+                            date: provider.selectedDate.microsecondsSinceEpoch,
+                            time: provider.selectedTime.hour);
+                        if(provider.editPage){
+                          TaskModel model2 = TaskModel(
+                              title: titleController.text,
+                              category: provider.selectedCategoryName,
+                              description: descriptionController.text,
+                              date: provider.selectedDate.microsecondsSinceEpoch,
+                              time: provider.selectedTime.hour,
+                              id: provider.modelID
+                          );
+                          FirebaseManager.updateEvent(model2).then((value) {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            provider.editPage = false;
+                          },);
+                        }else{
+                          FirebaseManager.addEvent(model).then(
+                            (value) {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                          );
+                        }
+                      },
+                      child: Text("Add Event",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(color: Colors.white)),
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(16),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          )),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         );
-      },
-    );
   }
 }

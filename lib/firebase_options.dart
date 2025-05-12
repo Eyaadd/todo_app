@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCS_tqrex5lJWq9Xqa1_D35HjcAVVEP5mY',
-    appId: '1:692439407802:android:26579213fc95873b4df683',
-    messagingSenderId: '692439407802',
-    projectId: 'todo-app-17542',
-    storageBucket: 'todo-app-17542.firebasestorage.app',
+    apiKey: 'AIzaSyCDcQmQobhV_oK9gAslFb4X2RLbrWhPSm8',
+    appId: '1:841918833669:android:b1356ed55762f16a8da86c',
+    messagingSenderId: '841918833669',
+    projectId: 'todo-app-98aba',
+    storageBucket: 'todo-app-98aba.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC8vh5kTm-njXTdTZa5gsBkraMnAi7DGXs',
-    appId: '1:692439407802:ios:159b1f6be48f30384df683',
-    messagingSenderId: '692439407802',
-    projectId: 'todo-app-17542',
-    storageBucket: 'todo-app-17542.firebasestorage.app',
+    apiKey: 'AIzaSyBJFFmaTHTWIgWMZx25ocN7i9DfXYMkvok',
+    appId: '1:841918833669:ios:a28b1b582e3aafba8da86c',
+    messagingSenderId: '841918833669',
+    projectId: 'todo-app-98aba',
+    storageBucket: 'todo-app-98aba.firebasestorage.app',
     iosBundleId: 'com.example.todoApp',
   );
+
 }

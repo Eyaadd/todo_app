@@ -9,14 +9,14 @@ class TaskModel {
   bool isDone;
 
   TaskModel({
-    required this.id,
+     this.id = "",
     required this.title,
     required this.category,
-    required this.location,
+     this.location = "",
     required this.description,
     required this.date,
     required this.time,
-    required this.isDone,
+     this.isDone = false,
   });
 
 

@@ -16,22 +16,40 @@ class CreateEventProvider extends ChangeNotifier {
 
   int selectedCategory = 0;
 
+  String get selectedCategoryName => eventCategories[selectedCategory];
+
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
+  var modelID = "";
+  bool editPage = false;
 
+  setModelID(var modelId){
+    modelID = modelId;
+    notifyListeners();
+  }
 
-  changeTime(TimeOfDay time){
+  changeTime(TimeOfDay time) {
     selectedTime = time;
     notifyListeners();
   }
 
-  changeDate(DateTime date){
+  changeDate(DateTime date) {
     selectedDate = date;
     notifyListeners();
   }
 
   changeCategory(int index) {
     selectedCategory = index;
+    notifyListeners();
+  }
+  ThemeMode themeMode = ThemeMode.light;
+
+  changeTheme(){
+    if(themeMode == ThemeMode.light){
+      themeMode = ThemeMode.dark;
+    }else{
+      themeMode = ThemeMode.light;
+    }
     notifyListeners();
   }
 }
